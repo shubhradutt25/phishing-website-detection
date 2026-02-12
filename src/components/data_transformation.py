@@ -72,6 +72,9 @@ class DataTransformation:
             input_feature_test_df = test_df.drop(columns=[target_column_name], axis=1)
             target_feature_test_df = test_df[target_column_name]
 
+            target_feature_train_df = target_feature_train_df.replace(-1, 0)
+            target_feature_test_df = target_feature_test_df.replace(-1, 0)
+
             preprocessing_obj = self.get_data_transformer_object(input_feature_train_df)
 
             logging.info("Applying preprocessing object")
