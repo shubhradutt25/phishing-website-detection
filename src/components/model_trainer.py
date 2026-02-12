@@ -43,8 +43,56 @@ class ModelTrainer:
                 "XGBClassifier": XGBClassifier()
             }
 
+            params = {
+
+                "Gradient Boosting": {
+                    'learning_rate': [0.01, 0.1],
+                    'n_estimators': [100, 200],
+                    'max_depth': [3, 5],
+                    'subsample': [0.8, 1.0]
+                },
+
+                "Adaboost Classifier": {
+                    'learning_rate': [0.01, 0.1, 0.5],
+                    'n_estimators': [50, 100, 200]
+                },
+
+                "K-Neighbors Classifier": {
+                    'n_neighbors': [5, 7, 9, 11],
+                    'weights': ['uniform', 'distance']
+                },
+
+                "Logistic Regression": {
+                    'C': [0.01, 0.1, 1, 10],
+                    'penalty': ['l2'],
+                    'solver': ['lbfgs']
+                },
+
+                "Random Forest": {
+                    'n_estimators': [100, 200],
+                    'max_depth': [None, 5, 10],
+                    'min_samples_split': [2, 5],
+                    'min_samples_leaf': [1, 2]
+                },
+
+                "Decision Tree": {
+                    'criterion': ['gini', 'entropy'],
+                    'max_depth': [None, 5, 10],
+                    'min_samples_split': [2, 5],
+                    'min_samples_leaf': [1, 2]
+                },
+
+                "XGBClassifier": {
+                    'learning_rate': [0.01, 0.1],
+                    'n_estimators': [100, 200],
+                    'max_depth': [3, 5, 7],
+                    'subsample': [0.8, 1.0]
+                }
+            }
+
+
             model_report:dict=evaluate_models(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
-                                             models=models)
+                                             models=models, params=params)
 
             ## To get best model score from dict
             best_model_score = max(model_report.values())
