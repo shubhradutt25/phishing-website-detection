@@ -1,10 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
-import Scanner from './Scanner'; // We import the scanner here
+import Scanner from './Scanner';
 import './App.css';
 
-// This function MUST be named App, not Scanner
 function App() {
   return (
     <Router>
