@@ -16,15 +16,7 @@ try:
 except Exception as e:
     print(f"Error loading model: {e}")
 
-# 🔹 Home Route (Index Page)
-@app.route('/')
-def index():
-    return render_template("index.html")
 
-# 🔹 Phishing Detection Page
-@app.route('/home')
-def home():
-    return render_template("home.html")
 
 # 🔹 Prediction API
 @app.route('/predict', methods=['POST'])
