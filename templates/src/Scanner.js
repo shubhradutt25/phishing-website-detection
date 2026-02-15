@@ -10,24 +10,44 @@ function Scanner() {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!url) return;
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!url) return;
 
-    setIsLoading(true);
-    setResult(null);
+  setIsLoading(true);
+  setResult(null);
 
-    // Simulate API Analysis
-    setTimeout(() => {
-      const isSafe = Math.random() > 0.5; 
-      setResult({
-        status: isSafe ? 'safe' : 'phishing',
-        message: isSafe ? 'Website is Safe' : 'Phishing Detected!',
-        confidence: '99.8%'
-      });
-      setIsLoading(false);
-    }, 2000);
-  };
+  try {
+    const response = await fetch("http://127.0.0.1:5000/predict", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ url: url }),
+    });
+
+    const data = await response.json();
+
+    setResult({
+      status: data.prediction === 1 ? "phishing" : "safe",
+      message: data.prediction === 1 
+        ? "Phishing Detected!" 
+        : "Website is Safe",
+      confidence: data.confidence || "95%"
+    });
+
+  } catch (error) {
+    console.error("Error:", error);
+    setResult({
+      status: "phishing",
+      message: "Server Error",
+      confidence: "-"
+    });
+  }
+
+  setIsLoading(false);
+};
+
 
   return (
     <div className="app-container">
