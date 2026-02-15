@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phishing Detector</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background-color: #f4f6f9;
+            padding-top: 100px;
+        }
+
+        input {
+            width: 400px;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #1e3c72;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #16315c;
+        }
+
+        #result {
+            margin-top: 30px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Enter URL to Check</h2>
+
+<input type="text" id="urlInput" placeholder="Enter website URL here">
+<br><br>
+<button onclick="predictURL()">Check URL</button>
+
+<div id="result"></div>
+
+<script>
+    function predictURL() {
+        const url = document.getElementById("urlInput").value;
+
+        fetch("/predict", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ url: url })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                document.getElementById("result").innerHTML =
+                    "Result: " + data.prediction;
+            } else {
+                document.getElementById("result").innerHTML =
+                    "Error: " + data.error;
+            }
+        })
+        .catch(error => {
+            document.getElementById("result").innerHTML =
+                "Something went wrong!";
+        });
+    }
+</script>
+
+</body>
+</html>
