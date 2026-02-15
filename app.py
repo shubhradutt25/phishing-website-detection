@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify, render_template
 import pickle
+from flask_cors import CORS
 import numpy as np
 from src.pipeline.predict_pipeline import get_prediction_features
 
 app = Flask(__name__)
+
+CORS(app)
 
 # Load Model
 try:
@@ -13,16 +16,6 @@ try:
 except Exception as e:
     print(f"Error loading model: {e}")
 
-# 🔹 Home Route (Index Page)
-@app.route('/')
-def index():
-    return render_template("index.html")
-
-# 🔹 Phishing Detection Page
-@app.route('/home')
-def home():
-    return render_template("home.html")
-
 # 🔹 Prediction API
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -31,7 +24,7 @@ def predict():
         url = data.get('url')
 
         if not url:
-            return jsonify({"error": "No URL provided", "status": "failed"})
+            return jsonify({"error": "No URL provided", "status": "failed"}), 400
 
         features = get_prediction_features(url)
         prediction = model.predict(features)
