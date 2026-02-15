@@ -8,3 +8,4 @@ flask
 xgboost
 dill
 node.js
+flask_cors
