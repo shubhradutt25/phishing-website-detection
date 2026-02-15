@@ -1,0 +1,139 @@
+/* Home.css */
+.home-container {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  overflow-x: hidden;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 10; /* Above background */
+  text-align: center;
+  max-width: 1200px;
+  width: 100%;
+  padding: 20px;
+}
+
+/* --- Hero Section --- */
+.hero-section {
+  margin-bottom: 80px;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-dim);
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+/* Glitch Effect Title */
+.glitch-wrapper {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.glitch {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  position: relative;
+  color: var(--primary);
+  letter-spacing: 4px;
+}
+
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--bg-dark); 
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -1px 0 red;
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: -1px 0 blue;
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(10px, 9999px, 30px, 0); }
+  20% { clip: rect(60px, 9999px, 80px, 0); }
+  40% { clip: rect(20px, 9999px, 50px, 0); }
+  60% { clip: rect(90px, 9999px, 100px, 0); }
+  80% { clip: rect(30px, 9999px, 50px, 0); }
+  100% { clip: rect(70px, 9999px, 90px, 0); }
+}
+
+/* CTA Button */
+.cta-btn {
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-family: 'Share Tech Mono', monospace;
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-btn:hover {
+  background: var(--primary);
+  color: black;
+}
+
+/* --- Features Grid --- */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.feature-card {
+  background: rgba(10, 25, 47, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 243, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-family: 'Share Tech Mono', monospace;
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+}
+
+.feature-card p {
+  color: var(--text-dim);
+  line-height: 1.6;
+}
