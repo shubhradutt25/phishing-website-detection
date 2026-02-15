@@ -34,3 +34,5 @@ def get_prediction_features(url):
         features.append(0)
 
     return np.array(features).reshape(1, -1)
+
+

@@ -16,6 +16,8 @@ try:
 except Exception as e:
     print(f"Error loading model: {e}")
 
+
+
 # 🔹 Prediction API
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -24,7 +26,7 @@ def predict():
         url = data.get('url')
 
         if not url:
-            return jsonify({"error": "No URL provided", "status": "failed"}), 400
+            return jsonify({"error": "No URL provided", "status": "failed"})
 
         features = get_prediction_features(url)
         prediction = model.predict(features)
@@ -45,3 +47,5 @@ def predict():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
