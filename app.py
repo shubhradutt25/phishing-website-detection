@@ -1,50 +1,62 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-from flask import Flask, request, jsonify, render_template
-import pickle
+from flask import Flask, request, jsonify
 from flask_cors import CORS
+import pickle
 import numpy as np
 from src.pipeline.predict_pipeline import get_prediction_features
 
 app = Flask(__name__)
-
 CORS(app)
 
-# Load Model
+# -----------------------------
+# Load Trained Model
+# -----------------------------
+model = None
+
 try:
     with open('artifacts/model.pkl', 'rb') as f:
         model = pickle.load(f)
-    print("Model loaded successfully!")
+    print("✅ Model loaded successfully!")
 except Exception as e:
-    print(f"Error loading model: {e}")
+    print(f" Error loading model: {e}")
 
-# 🔹 Home Route (Index Page)
-@app.route('/')
-def index():
-    return render_template("index.html")
 
-# 🔹 Phishing Detection Page
-@app.route('/home')
+# -----------------------------
+# Health Check Route
+# -----------------------------
+@app.route("/", methods=["GET"])
 def home():
-    return render_template("home.html")
+    return jsonify({"message": "Phishing Detection API is running"})
 
-# 🔹 Prediction API
+
+# -----------------------------
+# Prediction API
+# -----------------------------
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
+        if model is None:
+            return jsonify({
+                "error": "Model not loaded",
+                "status": "failed"
+            }), 500
+
         data = request.get_json()
-        url = data.get('url')
 
-        if not url:
-            return jsonify({"error": "No URL provided", "status": "failed"})
+        if not data or "url" not in data:
+            return jsonify({
+                "error": "No URL provided",
+                "status": "failed"
+            }), 400
 
+        url = data["url"]
+
+        # Feature Extraction
         features = get_prediction_features(url)
+
+        # Model Prediction
         prediction = model.predict(features)
 
-        if prediction[0] == 1:
-            result = "Phishing"
-        else:
-            result = "Safe"
+        result = "Phishing" if prediction[0] == 1 else "Safe"
 
         return jsonify({
             "url": url,
@@ -53,106 +65,16 @@ def predict():
         })
 
     except Exception as e:
-        return jsonify({"error": str(e), "status": "failed"})
-
-if __name__ == '__main__':
-    app.run(debug=True)
-=======
-from flask import Flask, request, jsonify, render_template
-import pickle
-from flask_cors import CORS
-import numpy as np
-from src.pipeline.predict_pipeline import get_prediction_features
-
-app = Flask(__name__)
-
-CORS(app)
-
-# Load Model
-try:
-    with open('artifacts/model.pkl', 'rb') as f:
-        model = pickle.load(f)
-    print("Model loaded successfully!")
-except Exception as e:
-    print(f"Error loading model: {e}")
-
-# 🔹 Prediction API
-@app.route('/predict', methods=['POST'])
-def predict():
-    try:
-        data = request.get_json()
-        url = data.get('url')
-
-        if not url:
-            return jsonify({"error": "No URL provided", "status": "failed"}), 400
-
-        features = get_prediction_features(url)
-        prediction = model.predict(features)
-
-        if prediction[0] == 1:
-            result = "Phishing"
-        else:
-            result = "Safe"
-
         return jsonify({
-            "url": url,
-            "prediction": result,
-            "status": "success"
-        })
+            "error": str(e),
+            "status": "failed"
+        }), 500
 
-    except Exception as e:
-        return jsonify({"error": str(e), "status": "failed"})
 
+# -----------------------------
+# Run Server
+# -----------------------------
 if __name__ == '__main__':
-    app.run(debug=True)
->>>>>>> e1fbfd766657ca36315abbc3dedeecdc3b299c90
-=======
-from flask import Flask, request, jsonify, render_template
-import pickle
-from flask_cors import CORS
-import numpy as np
-from src.pipeline.predict_pipeline import get_prediction_features
+    app.run(host="0.0.0.0", port=5000)
 
-app = Flask(__name__)
 
-CORS(app)
-
-# Load Model
-try:
-    with open('artifacts/model.pkl', 'rb') as f:
-        model = pickle.load(f)
-    print("Model loaded successfully!")
-except Exception as e:
-    print(f"Error loading model: {e}")
-
-# 🔹 Prediction API
-@app.route('/predict', methods=['POST'])
-def predict():
-    try:
-        data = request.get_json()
-        url = data.get('url')
-
-        if not url:
-            return jsonify({"error": "No URL provided", "status": "failed"}), 400
-
-        features = get_prediction_features(url)
-        prediction = model.predict(features)
-
-        if prediction[0] == 1:
-            result = "Phishing"
-        else:
-            result = "Safe"
-
-        return jsonify({
-            "url": url,
-            "prediction": result,
-            "status": "success"
-        })
-
-    except Exception as e:
-        return jsonify({"error": str(e), "status": "failed"})
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
->>>>>>> 54a9e694554879fcb54f6de653522a7269b62a85
