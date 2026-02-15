@@ -25,31 +25,35 @@ def save_object(file_path, obj):
 def evaluate_models(X_train, y_train, X_test, y_test, models, params):
     try:
         report = {}
+        trained_models = {}
 
-        for i in range(len(list(models))):
+        for model_name, model in models.items():
 
-            model = list(models.values())[i]
+            param_grid = params.get(model_name, {})
 
-            param=params[list(models.keys())[i]]
+            if len(param_grid) == 0:
+                model.fit(X_train, y_train)
+                best_model = model
+            else:
+                gs = GridSearchCV(
+                    model,
+                    param_grid,
+                    cv=3,
+                    scoring='accuracy',
+                    n_jobs=-1
+                )
+                gs.fit(X_train, y_train)
+                best_model = gs.best_estimator_
 
-            gs = GridSearchCV(model,param,cv=3)
-            gs.fit(X_train, y_train)
+            y_test_pred = best_model.predict(X_test)
+            test_score = accuracy_score(y_test, y_test_pred)
 
-            model.set_params(**gs.best_params_)
+            report[model_name] = test_score
+            trained_models[model_name] = best_model
 
-            model.fit(X_train, y_train)
+            print(f"{model_name}: Test Acc={test_score:.4f}")
 
-            y_train_pred = model.predict(X_train)
-
-            y_test_pred = model.predict(X_test)
-
-            train_model_score = accuracy_score(y_train, y_train_pred)
-
-            test_model_score = accuracy_score(y_test, y_test_pred)
-
-            report[list(models.keys())[i]] = test_model_score
-
-        return report
+        return report, trained_models
 
     except Exception as e:
-        raise CustomException(e,sys)
+        raise CustomException(e, sys)

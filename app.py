@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify, render_template
 import pickle
+from flask_cors import CORS
 import numpy as np
 from src.pipeline.predict_pipeline import get_prediction_features
 
 app = Flask(__name__)
+
+CORS(app)
 
 # Load Model
 try:
