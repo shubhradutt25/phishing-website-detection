@@ -7,21 +7,17 @@ const ParticlesBackground = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     let animationFrameId;
-
-    // FIX: Always use window. prefix for Lighthouse/ESLint
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
-    // 1. MOBILE OPTIMIZATION: Reduce columns to save CPU
     const isMobile = window.innerWidth < 768;
-    const fontSize = isMobile ? 24 : 14; // Larger font on mobile means significantly fewer calculations
+    const fontSize = isMobile ? 24 : 14;
     const columns = Math.floor(canvas.width / fontSize);
     
     const drops = [];
     for (let x = 0; x < columns; x++) {
-      drops[x] = Math.random() * -100; // Random start avoids a heavy initial sync load
+      drops[x] = Math.random() * -100;
     }
-
+    
     let mouse = { x: -1000, y: -1000 };
     const handleMouseMove = (e) => {
       mouse.x = e.clientX;
@@ -33,7 +29,6 @@ const ParticlesBackground = () => {
     const charArray = chars.split("");
 
     const draw = () => {
-      // 2. RENDERING OPTIMIZATION: Faster fading for better TBT (Total Blocking Time)
       ctx.fillStyle = isMobile ? 'rgba(0, 4, 40, 0.4)' : 'rgba(0, 4, 40, 0.1)'; 
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -49,7 +44,7 @@ const ParticlesBackground = () => {
         const text = charArray[Math.floor(Math.random() * charArray.length)];
 
         if (isHovered) {
-            ctx.fillStyle = '#ffffff';
+            ctx.fillStyle = '#17d443';
         } else {
             ctx.fillStyle = '#00f3ff';
         }
@@ -60,16 +55,28 @@ const ParticlesBackground = () => {
           drops[i] = 0;
         }
 
-        // 3. VELOCITY OPTIMIZATION: Slower speed = lower paint frequency
         const velocity = isHovered ? 0.5 : (isMobile ? 0.1 : 0.15);
         drops[i] += velocity;
       }
     };
 
-    const animate = () => {
-      draw();
+    let lastTime = 0;
+    const fps = 30;
+    const interval = 1000 / fps;
+
+    const animate = (timeStamp) => {
       animationFrameId = requestAnimationFrame(animate);
+
+      const deltaTime = timeStamp - lastTime;
+
+      if (deltaTime > interval) {
+        lastTime = timeStamp - (deltaTime % interval);
+        draw();
+      }
     };
+    const timeoutId = setTimeout(() => {
+      animate(0);
+    }, 2000);
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -83,6 +90,7 @@ const ParticlesBackground = () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
+      clearTimeout(timeoutId);
     };
   }, []);
 
@@ -94,7 +102,7 @@ const ParticlesBackground = () => {
         top: 0, 
         left: 0, 
         zIndex: 0,
-        pointerEvents: 'none' // Prevents canvas from capturing clicks intended for the UI
+        pointerEvents: 'none'
       }} 
     />
   );
