@@ -18,5 +18,4 @@ A high-performance, full-stack web application that uses Machine Learning to ana
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/](https://github.com/)[YOUR_USERNAME]/phishing-detector.git
-cd phishing-detector
+git clone https://github.com/shubhradutt25/phishing-website-detection.git
