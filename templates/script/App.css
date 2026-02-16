@@ -1,9 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap'); /* Tech Font */
 
 :root {
-  --primary: #00f3ff; /* Bright Cyan */
-  --secondary: #0082c8; /* Deep Cyan/Blue */
+  --primary: #00f3ff;
+  --secondary: #0082c8;
   --bg-dark: #000428;
   --bg-light: #004e92;
   --success: #00ff88;
@@ -16,25 +14,23 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
-  background: black; /* Fallback */
+  background: black;
 }
 
-/* --- Layout & Background --- */
+
 .app-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  /* Dark Gradient Background */
   background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
   position: relative;
 }
 
-/* --- Dark Glass Card --- */
+
 .glass-card {
   position: relative; 
   z-index: 10;
-  /* Dark semi-transparent background */
   background: rgba(10, 25, 47, 0.75); 
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -48,7 +44,6 @@ body {
   text-align: center;
 }
 
-/* --- Header --- */
 .header { margin-bottom: 2.5rem; }
 
 .icon-wrapper {
@@ -73,7 +68,6 @@ body {
 
 .header p { color: var(--text-dim); margin-top: 0.5rem; font-size: 0.9rem; }
 
-/* --- Input Field --- */
 .input-group {
   position: relative;
   margin-bottom: 2rem;
@@ -89,7 +83,6 @@ body {
 input[type="url"] {
   width: 100%;
   padding: 15px 15px 15px 45px;
-  /* Dark Input Style */
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(0, 243, 255, 0.3);
   color: var(--primary);
@@ -111,14 +104,13 @@ input[type="url"]:focus {
   box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
 }
 
-/* --- Button --- */
+
 .analyze-btn {
   width: 100%;
   padding: 15px;
   border: none; border-radius: 12px;
-  /* Cyan Gradient */
   background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
-  color: #000; /* Black text on bright button is readable */
+  color: #000;
   font-size: 1.1rem; font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -136,7 +128,6 @@ input[type="url"]:focus {
   background: #333; color: #666; cursor: not-allowed; box-shadow: none; 
 }
 
-/* --- Results --- */
 .result-card {
   margin-top: 2rem;
   padding: 15px;
@@ -148,21 +139,18 @@ input[type="url"]:focus {
 
 .result-card.safe {
   background: rgba(0, 255, 136, 0.1);
-  border-color: var(--success);
-  color: var(--success);
+  border: 1px solid #00ff88;
   box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
 }
 
 .result-card.phishing {
   background: rgba(255, 0, 85, 0.1);
-  border-color: var(--danger);
-  color: var(--danger);
+  border: 1px solid #ff0055;
   box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
 }
 
 .result-text h3 { margin: 0; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; }
 
-/* Loader */
 .loader { display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
 .loader::after {
   content: ""; width: 16px; height: 16px; border: 2px solid #000; 
