@@ -1,0 +1,168 @@
+
+:root {
+  --primary: #00f3ff; /* Bright Cyan */
+  --secondary: #0082c8; /* Deep Cyan/Blue */
+  --bg-dark: #000428;
+  --bg-light: #004e92;
+  --success: #00ff88;
+  --danger: #ff0055;
+  --text-main: #ffffff;
+  --text-dim: #a0aec0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  background: black; /* Fallback */
+}
+
+/* --- Layout & Background --- */
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* Dark Gradient Background */
+  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
+  position: relative;
+}
+
+/* --- Dark Glass Card --- */
+.glass-card {
+  position: relative; 
+  z-index: 10;
+  /* Dark semi-transparent background */
+  background: rgba(10, 25, 47, 0.75); 
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px; 
+  padding: 3rem;
+  width: 100%; 
+  max-width: 480px;
+  /* Cyan Glow Border */
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  box-shadow: 0 0 40px rgba(0, 243, 255, 0.15);
+  text-align: center;
+}
+
+/* --- Header --- */
+.header { margin-bottom: 2.5rem; }
+
+.icon-wrapper {
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  width: 80px; height: 80px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+}
+
+.shield-icon { color: #000; font-size: 2.5rem; }
+
+.header h1 { 
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 2.2rem; 
+  color: var(--primary); 
+  margin: 0; 
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+.header p { color: var(--text-dim); margin-top: 0.5rem; font-size: 0.9rem; }
+
+/* --- Input Field --- */
+.input-group {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%; left: 15px;
+  transform: translateY(-50%);
+  color: var(--primary); font-size: 1.2rem;
+}
+
+input[type="url"] {
+  width: 100%;
+  padding: 15px 15px 15px 45px;
+  /* Dark Input Style */
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  color: var(--primary);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: 'Share Tech Mono', monospace;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+input[type="url"]::placeholder {
+  color: rgba(0, 243, 255, 0.3);
+}
+
+input[type="url"]:focus {
+  border-color: var(--primary);
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+}
+
+/* --- Button --- */
+.analyze-btn {
+  width: 100%;
+  padding: 15px;
+  border: none; border-radius: 12px;
+  /* Cyan Gradient */
+  background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+  color: #000; /* Black text on bright button is readable */
+  font-size: 1.1rem; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(0, 243, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.analyze-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 243, 255, 0.5);
+}
+
+.analyze-btn:disabled { 
+  background: #333; color: #666; cursor: not-allowed; box-shadow: none; 
+}
+
+/* --- Results --- */
+.result-card {
+  margin-top: 2rem;
+  padding: 15px;
+  border-radius: 12px;
+  display: flex; align-items: center; gap: 15px;
+  text-align: left;
+  border: 1px solid transparent;
+}
+
+.result-card.safe {
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid #00ff88;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+}
+
+.result-card.phishing {
+  background: rgba(255, 0, 85, 0.1);
+  border: 1px solid #ff0055;
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
+}
+
+.result-text h3 { margin: 0; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; }
+
+/* Loader */
+.loader { display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+.loader::after {
+  content: ""; width: 16px; height: 16px; border: 2px solid #000; 
+  border-top-color: transparent; border-radius: 50%; 
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
