@@ -5,7 +5,7 @@ A high-performance, full-stack web application that uses Machine Learning to ana
 ## 🚀 Key Features
 * **AI-Powered Analysis:** Connects to a trained ML model to predict URL safety.
 * **Real-time Scanning:** Instant feedback with confidence scoring.
-* **Optimized Performance:** High Lighthouse scores (aiming for 100) with mobile-responsive design.
+* **Optimized Performance:** High Lighthouse scores.
 * **Cyber-Themed UI:** Interactive "Digital Rain" background using HTML5 Canvas.
 
 ## 🛠️ Tech Stack
