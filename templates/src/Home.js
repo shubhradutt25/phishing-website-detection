@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ParticlesBackground from './ParticlesBackground'; // Re-using your cool background
 import { motion } from 'framer-motion';
 import { FaCode, FaLock, FaUserSecret } from 'react-icons/fa';
-import './Home.css'; // We will create this next
+import './Home.css';
+
+const ParticlesBackground = React.lazy(() => import('./ParticlesBackground'));
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
     <div className="home-container">
-      {/* Background Animation */}
-      <ParticlesBackground />
+  
+      <Suspense fallback={<div style={{ position: 'absolute', inset: 0, background: '#0a192f' }} />}>
+        <ParticlesBackground />
+      </Suspense>
 
       <div className="content-wrapper">
         
-        {/* Hero Section */}
         <motion.div 
           className="hero-section"
           initial={{ opacity: 0, y: -50 }}
@@ -37,7 +39,6 @@ const Home = () => {
           </motion.button>
         </motion.div>
 
-        {/* Features Grid */}
         <div className="features-grid">
           <FeatureCard 
             icon={<FaCode />} 
@@ -64,7 +65,7 @@ const Home = () => {
   );
 };
 
-// Small helper component for cards
+
 const FeatureCard = ({ icon, title, desc, delay }) => (
   <motion.div 
     className="feature-card"

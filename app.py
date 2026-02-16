@@ -8,7 +8,6 @@ from src.pipeline.predict_pipeline import get_prediction_features
 app = Flask(__name__)
 CORS(app)
 
-# Load the model during startup
 model_path = 'artifacts/model.pkl'
 try:
     with open(model_path, 'rb') as f:
