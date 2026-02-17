@@ -1,0 +1,11 @@
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+joblib
+flask
+xgboost
+dill
+flask-cors
+gunicorn
