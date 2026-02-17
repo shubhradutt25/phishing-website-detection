@@ -1,11 +1,12 @@
-numpy
-pandas
-scikit-learn
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.3.2
+xgboost==1.7.6
 matplotlib
 seaborn
 joblib
 flask
-xgboost
 dill
 flask-cors
 gunicorn
+
