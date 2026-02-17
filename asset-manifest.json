@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/phishing-website-detection/static/css/main.07580ffd.css",
+    "main.js": "/phishing-website-detection/static/js/main.78b0a717.js",
+    "static/js/453.1d72c5f7.chunk.js": "/phishing-website-detection/static/js/453.1d72c5f7.chunk.js",
+    "index.html": "/phishing-website-detection/index.html",
+    "main.07580ffd.css.map": "/phishing-website-detection/static/css/main.07580ffd.css.map",
+    "main.78b0a717.js.map": "/phishing-website-detection/static/js/main.78b0a717.js.map",
+    "453.1d72c5f7.chunk.js.map": "/phishing-website-detection/static/js/453.1d72c5f7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.07580ffd.css",
+    "static/js/main.78b0a717.js"
+  ]
+}
