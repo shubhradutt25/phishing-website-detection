@@ -19,15 +19,14 @@ const handleSubmit = async (e) => {
 
   setIsLoading(true);
   setResult(null);
+  const API_URL = 'https://phishing-website-detection-at66.onrender.com';
 
-  try {
-    const response = await fetch('http://127.0.0.1:5000/predict', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ url: url }),
-    });
+    try {
+      const response = await fetch(`${API_URL}/predict`, { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url }),
+      });
 
     const data = await response.json();
     console.log("WHAT PYTHON SENT:", data);
@@ -44,15 +43,12 @@ const handleSubmit = async (e) => {
 
   return (
     <div className="app-container">
-      {/* 1. Add a small delay prop to the background so it doesn't block painting */}
+
       <ParticlesBackground delay={200} />
 
-      {/* 2. Remove 'initial={{ opacity: 0 }}' from the main card. 
-             This allows the gray box to appear INSTANTLY. */}
       <div className="glass-card">
         
         <div className="header">
-          {/* Keep the icon animation if you want, but the text must be static */}
           <motion.div 
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -72,14 +68,13 @@ const handleSubmit = async (e) => {
             onSubmit={handleSubmit} 
             className="search-form"
         >
-          {/* ... inputs and buttons ... */}
           <div className="input-group">
             <FaLink className="input-icon" />
             <input 
               type="url" 
               placeholder="https://example.com" 
               value={url}
-              onChange={handleInputChange} // Link to the reset handler
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -94,29 +89,29 @@ const handleSubmit = async (e) => {
         </motion.form>
 
         <AnimatePresence>
-          {result && (
+          {result && result.prediction && (
             <motion.div 
-              className={`result-card ${result.status}`}
+              className={`result-card ${result.prediction.toLowerCase()}`}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
             >
               <div className="result-icon">
-                {result.status === 'safe' ? <FaCheckCircle /> : <FaExclamationTriangle />}
+                {result.prediction === 'Safe' ? <FaCheckCircle /> : <FaExclamationTriangle />}
               </div>
               <div className="result-text">
                 <h3 style={{ 
-                  color: result?.prediction === 'Safe' ? '#00ff88' : '#ff0055',
-                  textShadow: result?.prediction === 'Safe' ? '0 0 10px rgba(0,255,136,0.3)' : '0 0 10px rgba(255,0,85,0.3)'
+                  color: result.prediction === 'Safe' ? '#00ff88' : '#ff0055',
+                  textShadow: result.prediction === 'Safe' ? '0 0 10px rgba(0,255,136,0.3)' : '0 0 10px rgba(255,0,85,0.3)'
                 }}>
-                  {result?.prediction ? result.prediction.toUpperCase() : `STATUS: ${result?.status}`}
+                  {result.prediction.toUpperCase()}
                 </h3>
-                {result?.confidence ? (
+                {result.confidence ? (
                   <p style={{ color: '#ccc', fontSize: '0.9rem' }}>
                     Confidence: <span style={{ color: '#fff', fontWeight: 'bold' }}>{result.confidence}%</span>
                   </p>
                 ) : (
-                  <p style={{ color: '#ffcc00' }}>Error: {result?.error || "No confidence data received"}</p>
+                  <p style={{ color: '#ffcc00' }}>Error: No confidence data</p>
                 )}
               </div>
             </motion.div>
