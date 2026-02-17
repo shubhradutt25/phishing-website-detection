@@ -7,5 +7,5 @@ joblib
 flask
 xgboost
 dill
-flask_cors
+flask-cors
 gunicorn
