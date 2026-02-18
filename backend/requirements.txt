@@ -9,4 +9,7 @@ flask
 dill
 flask-cors
 gunicorn
-
+tldextract
+beautifulsoup4
+python-whois
+requests
