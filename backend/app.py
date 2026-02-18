@@ -47,8 +47,8 @@ def predict():
         data_df = pd.DataFrame(features, columns=feature_names)
 
 
-        prediction = model.predict(data_df)
-        probabilities = model.predict_proba(data_df)
+        prediction = model.predict(data_df.values)
+        probabilities = model.predict_proba(data_df.values)
 
 
         confidence = np.max(probabilities) * 100
@@ -72,3 +72,4 @@ def predict():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
